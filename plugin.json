@@ -1,0 +1,31 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "model-aware-prompt-engineering",
+  "version": "1.0.0",
+  "description": "Write, review, debug, and migrate prompts using model-specific guidance for Claude, OpenAI GPT, and Gemini.",
+  "author": {
+    "name": "Laura Florentin"
+  },
+  "repository": "https://github.com/LauraFlorentin/Model-Aware-Prompt-Engineering",
+  "license": "MIT",
+  "keywords": [
+    "prompt-engineering",
+    "agent-skills",
+    "claude",
+    "openai",
+    "gemini"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Model-Aware Prompt Engineering",
+        "shortDescription": "Model-specific prompt design",
+        "longDescription": "Write, review, debug, and migrate prompts using the official prompting guidance for the exact Claude, OpenAI GPT, or Gemini model the prompt will run on.",
+        "developerName": "Laura Florentin",
+        "category": "Productivity",
+        "capabilities": ["Interactive"],
+        "defaultPrompt": "Help me write or improve a prompt for the exact model I plan to use."
+      }
+    }
+  }
+}
