@@ -1,6 +1,6 @@
 # Model-Aware Prompt Engineering
 
-A Claude skill that writes, reviews, debugs and migrates prompts using the **official prompting guidance for the exact model the prompt will run on**. It covers Anthropic Claude, OpenAI GPT and Google Gemini.
+A portable Agent Skill that writes, reviews, debugs and migrates prompts using the **official prompting guidance for the exact model the prompt will run on**. The same canonical `SKILL.md` works across Anthropic Claude, OpenAI ChatGPT/Codex, and Google Gemini CLI.
 
 Prompting advice doesn't carry over cleanly between models. "Think step by step", CAPS-lock emphasis, prefilled responses and a low temperature can help one model and break another. Before drafting anything, this skill works out the target model, its settings and how it will be used (chat, long documents, agent, unattended run). It then applies that vendor's own best practices, including what to *remove* from prompts written for older models.
 
@@ -22,8 +22,9 @@ The skill also includes:
 ## Repository layout
 
 ```
+plugin.json                         # Agent Plugins 1.0 manifest for ChatGPT/OpenAI
 skills/prompt-engineering/
-├── SKILL.md                 # Model router + per-model guidance
+├── SKILL.md                       # Canonical cross-platform skill
 └── references/
     ├── claude-techniques.md
     ├── system-prompt-patterns.md
@@ -34,18 +35,47 @@ skills/prompt-engineering/
     └── console-tools.md
 ```
 
+`skills/prompt-engineering/` is the source of truth. Platform-specific installation should point to that folder rather than duplicating the instructions.
+
 The reference files cover general techniques. Some of them were written before Claude 4.6 (for example, their prefill advice). Where they disagree with `SKILL.md`, the model sections in `SKILL.md` take precedence.
 
 ## Installation
 
-**Claude Code:** copy the skill folder into your skills directory.
+### Claude
+
+**Claude Code:** clone the repository and copy the canonical skill folder into your user skills directory.
 
 ```bash
 git clone https://github.com/LauraFlorentin/Model-Aware-Prompt-Engineering.git
 cp -r Model-Aware-Prompt-Engineering/skills/prompt-engineering ~/.claude/skills/
 ```
 
-**Claude.ai / Claude desktop:** zip the `skills/prompt-engineering` folder and upload it under Settings → Capabilities → Skills.
+**Claude.ai / Claude desktop:** zip `skills/prompt-engineering` and upload it under Settings → Capabilities → Skills.
+
+### ChatGPT / OpenAI
+
+The repository includes a root `plugin.json` using the Agent Plugins 1.0 format. Package the repository as a skills-only plugin with this structure:
+
+```text
+model-aware-prompt-engineering/
+├── plugin.json
+└── skills/
+    └── prompt-engineering/
+        ├── SKILL.md
+        └── references/
+```
+
+Upload the resulting ZIP or `.tar.gz` as a private ChatGPT plugin. The `skills/prompt-engineering/SKILL.md` file remains the canonical skill; the root manifest is only the ChatGPT/OpenAI packaging layer.
+
+### Gemini CLI
+
+Gemini CLI supports the Agent Skills open standard and can install skills from Git repositories. Because this repository contains multiple top-level files, point installation at the skill subdirectory:
+
+```bash
+gemini skills install https://github.com/LauraFlorentin/Model-Aware-Prompt-Engineering.git --path skills/prompt-engineering
+```
+
+Use `--scope workspace` if you want the skill only in the current project, or `--consent` to skip the installation confirmation. After installation, run `/skills reload` in an interactive Gemini CLI session, then verify with `/skills list`.
 
 ## Usage
 
