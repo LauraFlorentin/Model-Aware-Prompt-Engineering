@@ -74,3 +74,7 @@ When a vendor ships a new model or prompting guide:
 1. Add a section under the vendor in `SKILL.md`: traits, effort default, what to remove, what to add, and links to the sources.
 2. Update the comparison table and the lineup table.
 3. Update the "as of" date in this README.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
