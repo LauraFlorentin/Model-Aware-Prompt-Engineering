@@ -15,16 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build plugin archive
+      - name: Stage plugin package
         run: |
           mkdir -p dist/model-aware-prompt-engineering/skills
           cp plugin.json dist/model-aware-prompt-engineering/plugin.json
           cp -R skills/prompt-engineering dist/model-aware-prompt-engineering/skills/prompt-engineering
-          cd dist
-          zip -r model-aware-prompt-engineering-chatgpt.zip model-aware-prompt-engineering
 
-      - name: Upload plugin archive
+      - name: Upload installable plugin artifact
         uses: actions/upload-artifact@v4
         with:
           name: model-aware-prompt-engineering-chatgpt
-          path: dist/model-aware-prompt-engineering-chatgpt.zip
+          path: dist/model-aware-prompt-engineering/
+          include-hidden-files: true
